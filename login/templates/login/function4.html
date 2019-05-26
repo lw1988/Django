@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>户型-数量、户型-价格</title>
+    <script src="/static/js/echarts.min.js"></script>
+</head>
+<body>
+    <!--为echart准备一个具备大小宽高的Dom-->
+    <div id="main" style="width: 100%;height:700px;"></div>
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option;
+
+        var seriesLabel = {
+            normal: {
+                show: true,
+                textBorderColor: '#333',
+                textBorderWidth: 2
+            }
+        }
+
+        option = {
+            title: {
+                text: '户型-数量、户型-价格'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['Count', 'Price']
+            },
+            grid: {
+                left: 100
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'value',
+                name: 'Price-Count',
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            yAxis: {
+                type: 'category',
+                inverse: true,
+                data: {{ listy|safe }},
+                axisLabel: {
+                    formatter: function (value) {
+                        return value ;
+                    },
+                    margin: 20
+                }
+            },
+            series: [
+                {
+                    name: 'Count',
+                    type: 'bar',
+                    data: {{ list|safe }},
+                    label: seriesLabel,
+                    markPoint: {
+                        symbolSize: 1,
+                        symbolOffset: [0, '50%']
+                    }
+                },
+                {
+                    name: 'Price',
+                    type: 'bar',
+                    label: seriesLabel,
+                    data: {{ list2|safe }}
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

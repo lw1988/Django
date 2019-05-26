@@ -23,6 +23,6 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'',include('login.urls')),
-    path(r'captcha',include('captcha.urls'))
+    # path(r'captcha',include('captcha.urls'))#验证码
 
 ]

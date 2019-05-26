@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图表</title>
+    <script src="/static/js/echarts.min.js"></script>
+</head>
+<body>
+<form action="../function2/" method="post">
+    <!--为echart准备一个具备大小宽高的Dom-->
+    <div id="main" style="width: 100%;height:700px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        data1 ={{d1|safe}}
+        data2 = {{ d2|safe }}
+        // 指定图表的配置项和数据
+        var option;
+
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'none'
+                },
+                formatter: function (params) {
+                    return params[0].name + ': ' + params[0].value;
+                }
+            },
+            xAxis: {
+                data:data1,
+                {#data: ['驯鹿', '火箭', '飞机', '高铁', '轮船', '汽车', '跑步', '步行', ],#}
+                axisTick: {show: false},
+                axisLine: {show: false},
+                axisLabel: {
+                    textStyle: {
+                        color: '#e54035'
+                    }
+                }
+            },
+            yAxis: {
+                splitLine: {show: false},
+                axisTick: {show: false},
+                axisLine: {show: false},
+                axisLabel: {show: false}
+            },
+            color: ['#e54035'],
+            series: [{
+                name: 'hill',
+                type: 'pictorialBar',
+                barCategoryGap: '-130%',
+                // symbol: 'path://M0,10 L10,10 L5,0 L0,10 z',
+                symbol: 'path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z',
+                itemStyle: {
+                    normal: {
+                        opacity: 0.5
+                    },
+                    emphasis: {
+                        opacity: 1
+                    }
+                },
+                data: data2,
+                z: 10
+            }, {
+                name: 'glyph',
+                type: 'pictorialBar',
+                barGap: '-100%',
+                symbolPosition: 'end',
+                symbolSize: 50,
+                symbolOffset: [0, '-120%'],
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    <button type="submit">下一页</button>
+</form>
+</body>
+</html>

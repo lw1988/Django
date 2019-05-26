@@ -19,7 +19,7 @@ def login(request):
             try:
                 user=models.User.objects.get(username=username)
                 if user.password==password:
-                    #将用户的转态和数据写入session字典
+                    #将用户的状态和数据写入session字典
                     request.session['is_login']=True
                     request.session['user_id']=user.id
                     request.session['user_name']=user.username
@@ -44,7 +44,7 @@ def register(request):
            email=register_form.cleaned_data['email']
            sex=register_form.cleaned_data['sex']
            print(username+"--"+password1)
-           if password1!=password2==False:
+           if password1!=password2:
                message="两次输入的密码不一致"
                return  render(request,'login/register.html',locals())
            else:
